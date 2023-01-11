@@ -12,12 +12,34 @@
   @param chislo: number[]
   @return Array<Array<number>>
 */
-function sostavChisla(massivChisel, chislo) {
-  // код писать только внутри данной функции
-  return [[1, 2], [3]];
-}
 
-// console.log(sostavChisla([8, 2, 3, 4, 6, 7, 1], 99));
+function sostavChisla(massivChisel, chislo) {
+  const result = [];
+  const tmp = [];
+
+  const uniqueCombination = (massivChisel, chislo, sum, startIndex) => {
+    if (sum == chislo) {
+      result.push([...tmp]);
+      return;
+    }
+
+    for (let index = startIndex; index < massivChisel.length; index++) {
+      if (sum + massivChisel[index] > chislo) {
+        continue;
+      }
+
+      tmp.push(massivChisel[index]);
+
+      uniqueCombination(massivChisel, chislo, sum + massivChisel[index], index + 1);
+
+      tmp.pop();
+    }
+  };
+
+  uniqueCombination(massivChisel, chislo, 0, 0);
+
+  return result;
+}
 
 function compareNumericArrays(arr1, arr2) {
   if (arr1.length !== arr2.length) {
